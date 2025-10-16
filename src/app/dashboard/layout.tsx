@@ -100,6 +100,7 @@ export default function DashboardLayout({
           {/* User Info */}
           <div className="border-t border-gray-800 p-4">
             <div className="flex items-center space-x-3 mb-3">
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={session.user?.image || '/default-avatar.png'}
                 alt={session.user?.name || 'User'}
