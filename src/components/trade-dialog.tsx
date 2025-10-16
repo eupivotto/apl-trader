@@ -48,6 +48,7 @@ type TradeFormValues = z.infer<typeof tradeSchema>;
 interface TradeDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit: (trade: any) => void;
   initialData?: Trade | null;
 }

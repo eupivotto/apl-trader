@@ -3,14 +3,16 @@
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
+// REMOVA esta linha:
+// import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
   LayoutDashboard, 
   TrendingUp, 
   Users, 
   Settings, 
   LogOut,
-  Menu
+  Menu,
+  X
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -59,15 +61,15 @@ export default function DashboardLayout({
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="lg:hidden text-white hover:bg-gray-800"
               onClick={() => setSidebarOpen(false)}
             >
-              <Menu className="h-5 w-5" />
+              <X className="h-5 w-5" />
             </Button>
           </div>
 
-          {/* Navigation */}
-          <ScrollArea className="flex-1 py-4">
+          {/* Navigation - Usando div normal com overflow */}
+          <div className="flex-1 overflow-y-auto py-4">
             <nav className="space-y-1 px-3">
               {menuItems.map((item) => {
                 const Icon = item.icon;
@@ -93,7 +95,7 @@ export default function DashboardLayout({
                 );
               })}
             </nav>
-          </ScrollArea>
+          </div>
 
           {/* User Info */}
           <div className="border-t border-gray-800 p-4">
