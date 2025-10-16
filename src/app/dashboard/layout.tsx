@@ -3,8 +3,7 @@
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-// REMOVA esta linha:
-// import { ScrollArea } from '@/components/ui/scroll-area';
+import Image from 'next/image';
 import { 
   LayoutDashboard, 
   TrendingUp, 
@@ -35,8 +34,8 @@ export default function DashboardLayout({
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-lg">Carregando...</div>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+        <div className="text-lg text-gray-600">Carregando...</div>
       </div>
     );
   }
@@ -47,28 +46,28 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* Sidebar */}
       <aside className={`
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-        fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-white transition-transform duration-300 ease-in-out
-        lg:translate-x-0 lg:static lg:inset-0
+        fixed inset-y-0 left-0 z-50 w-64 transform bg-gray-900 text-white transition-transform duration-300 ease-in-out
+        lg:static lg:translate-x-0
       `}>
         <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="flex h-16 items-center justify-between px-6 border-b border-gray-800">
+          <div className="flex h-16 items-center justify-between border-b border-gray-800 px-6">
             <h1 className="text-xl font-bold">Trade Platform</h1>
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden text-white hover:bg-gray-800"
+              className="text-white hover:bg-gray-800 lg:hidden"
               onClick={() => setSidebarOpen(false)}
             >
               <X className="h-5 w-5" />
             </Button>
           </div>
 
-          {/* Navigation - Usando div normal com overflow */}
+          {/* Navigation */}
           <div className="flex-1 overflow-y-auto py-4">
             <nav className="space-y-1 px-3">
               {menuItems.map((item) => {
@@ -99,18 +98,27 @@ export default function DashboardLayout({
 
           {/* User Info */}
           <div className="border-t border-gray-800 p-4">
-            <div className="flex items-center space-x-3 mb-3">
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={session.user?.image || '/default-avatar.png'}
-                alt={session.user?.name || 'User'}
-                className="h-10 w-10 rounded-full"
-              />
+            <div className="mb-3 flex items-center space-x-3">
+              {session.user?.image ? (
+                <Image
+                  src={session.user.image}
+                  alt={session.user.name || 'User'}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              ) : (
+                <div className="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center">
+                  <span className="text-lg font-semibold">
+                    {session.user?.name?.charAt(0) || 'U'}
+                  </span>
+                </div>
+              )}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">
+                <p className="truncate text-sm font-medium">
                   {session.user?.name}
                 </p>
-                <p className="text-xs text-gray-400 truncate">
+                <p className="truncate text-xs text-gray-400">
                   {session.user?.email}
                 </p>
               </div>

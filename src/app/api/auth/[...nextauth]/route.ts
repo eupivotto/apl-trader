@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -14,7 +15,8 @@ export const authOptions = {
   callbacks: {
     async session({ session, token }) {
       if (session?.user) {
-        session.user.id = token.sub!;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (session.user as any).id = token.sub;
       }
       return session;
     },
@@ -23,4 +25,5 @@ export const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };
