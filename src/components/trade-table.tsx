@@ -259,7 +259,7 @@ export function TradeTable({ trades, onEdit, onDelete }: TradeTableProps) {
                           <TableCell className="text-center">
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-200">
+                                <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-200" onClick={() => console.log('DropdownMenuTrigger clicked')}>
                                   <span className="sr-only">Abrir menu</span>
                                   <MoreHorizontal className="h-4 w-4" />
                                 </Button>
